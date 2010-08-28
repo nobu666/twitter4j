@@ -478,7 +478,8 @@ public class DAOTest extends TwitterTestBase {
     public void testUserAsJSON() throws Exception {
         // single User
         HttpClientWrapper http = new HttpClientWrapper();
-        User user = new UserJSONImpl(http.get("http://twitter4j.org/en/testcases/users/show/twit4j.json"));
+        JSONObject json = getJSONObjectFromClassPath("/user.json");
+        User user = new UserJSONImpl(json);
         assertTrue(user.isGeoEnabled());
         assertFalse(user.isVerified());
         assertEquals(id1.screenName, user.getName());
@@ -514,7 +515,7 @@ public class DAOTest extends TwitterTestBase {
         assertFalse(user.isStatusFavorited());
         assertNull(user.getStatusInReplyToScreenName());
         assertDeserializedFormIsEqual(user);
-
+        assertTrue(0 <= user.getListedCount());
         List<User> users;
 
         // User list
@@ -523,7 +524,7 @@ public class DAOTest extends TwitterTestBase {
         assertDeserializedFormIsEqual(users);
     }
     public void testUserListAsJSON() throws Exception {
-        
+
     }
 
     public void testStatusAsJSON() throws Exception {
